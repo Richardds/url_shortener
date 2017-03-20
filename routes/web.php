@@ -11,6 +11,6 @@
 |
 */
 
-$app->get('/', function () use ($app) {
-    return $app->version();
-});
+$app->get('/', 'MainController@main');
+$app->post('/', 'UrlController@register');
+$app->get('/{id:[A-Za-z0-9]+}', 'UrlController@redirect');
