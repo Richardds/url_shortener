@@ -28,11 +28,16 @@ class UrlController extends Controller
             return view('main', $vars);
         }
 
-        $url = Url::create([
-            'url' => $request->get('url')
-        ]);
+        $url = $request->get('url');
+        if (($components = Url::toComponents($url)) !== false) {
+            $url_model = Url::create([
+                'url' => Url::toUrlString($components)
+            ]);
 
-        $vars['url'] = env('APP_DOMAIN') . '/' . $url->getTextId();
+            $vars['url'] = env('APP_DOMAIN') . '/' . $url_model->getTextId();
+        } else {
+            $vars['error'] = 'Invalid URL submitted!';
+        }
 
         return view('main', $vars);
     }

@@ -24,6 +24,7 @@
                             <div class="input-group">
                                 <input type="submit" class="btn btn-primary input-group-btn btn-sm" value="Get shorter URL">
                                 <input type="text" class="form-input input-sm" value="{{ $url ?? '' }}" readonly>
+                                <button class="btn btn-primary input-group-btn btn-sm"><i class="fa fa-clipboard" aria-hidden="true"></i></button>
                             </div>
                         </form>
                     </div>

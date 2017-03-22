@@ -77,4 +77,52 @@ class Url extends Model
 
         return $res;
     }
+
+    /**
+     * Returns extracted URL components from given string.
+     * May return null on invalid url.
+     *
+     * @param string $url
+     * @return array|bool
+     */
+    public static function toComponents(string $url)
+    {
+        $acceptable_components = [
+            'scheme' => PHP_URL_SCHEME,
+            'host' => PHP_URL_HOST,
+            'path' => PHP_URL_PATH,
+            'query' => PHP_URL_QUERY,
+            'fragment' => PHP_URL_FRAGMENT
+        ];
+        $parsed_components = [];
+        foreach ($acceptable_components as $component_name => $component) {
+            if (($parsed_component = parse_url($url, $component)) !== false) {
+                $parsed_components[$component_name] = $parsed_component;
+                continue;
+            }
+
+            return false;
+        }
+
+        return $parsed_components;
+    }
+
+    /**
+     * Create URL string from given components returned by toComponents.
+     * @see toComponents
+     *
+     * @param array $components
+     * @return string
+     */
+    public static function toUrlString(array $components)
+    {
+        $url = $components['scheme'] . '://';
+        $url .= $components['host'];
+        $url .= ($components['path'] == '/' ? '' : $components['path']);
+        $url .= (!empty($components['query']) ? '?' . $components['query'] : '');
+        $url .= (!empty($components['fragment']) ? '#' . $components['fragment'] : '');
+
+        return $url;
+    }
+
 }
