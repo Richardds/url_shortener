@@ -16,7 +16,8 @@ class UrlController extends Controller
     {
         $vars = [
             'error' => '',
-            'url' => ''
+            'url' => '',
+            'shortcut_url' => ''
         ];
 
         try {
@@ -29,12 +30,12 @@ class UrlController extends Controller
         }
 
         $url = $request->get('url');
-        if (($components = Url::toComponents($url)) !== false) {
-            $url_model = Url::create([
-                'url' => Url::toUrlString($components)
-            ]);
 
-            $vars['url'] = env('APP_DOMAIN') . '/' . $url_model->getTextId();
+        if (($components = Url::toComponents($url)) !== false) {
+            $urlString = Url::toUrlString($components);
+            $url_model = Url::create(['url' => $urlString]);
+            $vars['shortcut_url'] = env('APP_DOMAIN') . '/' . $url_model->getTextId();
+            $vars['url'] = $urlString;
         } else {
             $vars['error'] = 'Invalid URL submitted!';
         }
