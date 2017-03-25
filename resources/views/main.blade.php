@@ -19,12 +19,11 @@
                         <form method="post">
                             <div class="form-group">
                                 <label class="form-label" for="input-url">URL</label>
-                                <textarea class="form-input" id="input-url" rows="3" name="url"></textarea>
+                                <textarea class="form-input" id="input-url" rows="3" name="url">{{ $url ?? '' }}</textarea>
                             </div>
                             <div class="input-group">
                                 <input type="submit" class="btn btn-primary input-group-btn btn-sm" value="Get shorter URL">
-                                <input type="text" class="form-input input-sm" value="{{ $url ?? '' }}" readonly>
-                                <button class="btn btn-primary input-group-btn btn-sm"><i class="fa fa-clipboard" aria-hidden="true"></i></button>
+                                <input type="text" class="form-input input-sm" onClick="this.select();" value="{{ $shortcut_url ?? '' }}" readonly>
                             </div>
                         </form>
                     </div>
